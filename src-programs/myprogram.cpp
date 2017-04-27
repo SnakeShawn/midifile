@@ -29,9 +29,9 @@ int main(int argc, char** argv) {
    }
 
    int tpq = midifile.getTicksPerQuarterNote();
+
    midifile.linkNotePairs();
    int tracks = midifile.getTrackCount();
-   //cout << "TPQ: " << tpq << endl;
    if (tracks > 1) {
       //cout << "TRACKS: " << tracks << endl;
    }
@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
 
    //cout << "Ticks\tDUR\tTrack\tNote" << endl;
    for (int track=0; track < midifile.getTrackCount(); track++){
-	for (int i=0; i < midifile[track].size(); i++){
+	for (unsigned int i=0; i < midifile[track].size(); i++){
    		mev = &midifile[track][i];
 		MidiEvent& data = midifile[track][i];
 //		if (midifile[track][i][0] == 0xff && midifile[track][i][1] == 0x51){
@@ -81,14 +81,14 @@ int main(int argc, char** argv) {
 
 //cout<<"\n%=============================\n";
    sort(startVec.begin(), startVec.end());
-   for (int i=0; i<startVec.size(); i++){
+   for (unsigned int i=0; i<startVec.size(); i++){
 	vector<LNote> tmpVec;
 	int minLen = MAX_LEN;
 	int start = startVec[i];
 	int nextStart = -1;
 	if (i+1 < startVec.size())
 		nextStart = startVec[i+1];
-   	for (int j=0; j<noteVec.size(); j++){
+   	for (unsigned int j=0; j<noteVec.size(); j++){
 		if (start == noteVec[j].start){
 			tmpVec.push_back(noteVec[j]);
 			if (noteVec[j].length<minLen) minLen = noteVec[j].length; 
@@ -98,7 +98,7 @@ int main(int argc, char** argv) {
 		}
 	}
 	if (nextStart<start+minLen && nextStart!=-1) minLen = nextStart - start; 
-	for (int k=0; k<tmpVec.size(); k++){
+	for (unsigned int k=0; k<tmpVec.size(); k++){
 		cout<<tmpVec[k].key;
 		if(k+1!=tmpVec.size())cout<<',';
 		LNote ln = {tmpVec[k].key, tmpVec[k].start+minLen, tmpVec[k].length-minLen};
